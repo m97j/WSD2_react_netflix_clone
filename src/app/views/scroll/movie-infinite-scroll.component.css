@@ -1,0 +1,46 @@
+/* 예시 스타일, 필요에 따라 추가 가능 */
+.movie-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .grid-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .movie-row {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .movie-card {
+    position: relative;
+    margin: 10px;
+  }
+  
+  .loading-trigger {
+    height: 1px;
+    visibility: hidden;
+  }
+  
+  .loading-indicator {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .top-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+  }
+  
+  .show-top-button .top-button {
+    display: block;
+  }
+  

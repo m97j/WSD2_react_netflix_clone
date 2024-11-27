@@ -2,6 +2,9 @@
 
 추가 다운로드 패키지들
 
+
+npm install axios
+
 npm install react-router-dom @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
 
 npm install --save-dev @babel/plugin-proposal-private-property-in-object

@@ -2,24 +2,38 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 50px;
+  transition: margin-top 0.3s;
 }
 
 .view-toggle button {
   background-color: #333;
-  color: white;
+  color: #fff;
   border: none;
   padding: 10px 15px;
   margin-left: 10px;
   cursor: pointer;
   border-radius: 4px;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.view-toggle button:hover {
+  background-color: #444;
+  transform: scale(1.05);
 }
 
 .view-toggle button.active {
   background-color: #535bf2;
+  box-shadow: 0 4px 8px rgba(83, 91, 242, 0.5);
 }
 
 @media (max-width: 768px) {
   .view-toggle {
     margin-top: 80px;
+  }
+
+  .view-toggle button {
+    padding: 8px 12px;
+    margin-left: 5px;
   }
 }

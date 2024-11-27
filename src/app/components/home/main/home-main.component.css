@@ -1,0 +1,50 @@
+:host {
+  display: block;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+:host:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+::ng-deep html,
+::ng-deep body {
+  overflow-y: scroll !important;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: #ffffff;
+}
+
+::ng-deep body {
+  background-color: #141414 !important;
+  margin: 0;
+  padding: 0;
+}
+
+::ng-deep a {
+  color: #1e90ff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+::ng-deep a:hover {
+  color: #ff4500;
+}
+
+::ng-deep button {
+  background-color: #1e90ff;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+::ng-deep button:hover {
+  background-color: #ff4500;
+  transform: scale(1.05);
+}

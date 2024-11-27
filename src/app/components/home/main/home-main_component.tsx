@@ -20,12 +20,12 @@ const HomeMainComponent: React.FC = () => {
       const movie = await URLService.fetchFeaturedMovie(apiKey);
       setFeaturedMovie(movie);
     };
+    loadFeaturedMovie();
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
 
-    loadFeaturedMovie();
     window.addEventListener('scroll', handleScroll);
 
     return () => {

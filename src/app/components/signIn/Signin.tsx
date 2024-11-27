@@ -16,11 +16,31 @@ const SignIn: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // onMounted 로직
+    // onMounted 로직: 로컬 스토리지에서 ID와 비밀번호 가져오기
+    const savedEmail = localStorage.getItem('email');
+    const savedPassword = localStorage.getItem('password');
+    const savedRememberMe = localStorage.getItem('rememberMe') === 'true';
+    if (savedEmail) {
+      setEmail(savedEmail);
+    }
+    if (savedPassword) {
+      setPassword(savedPassword);
+    }
+    setRememberMe(savedRememberMe);
+
     return () => {
-      // onUnmounted 로직
+      // onUnmounted 로직: 로컬 스토리지에 ID와 비밀번호 저장
+      if (rememberMe) {
+        localStorage.setItem('email', email);
+        localStorage.setItem('password', password);
+        localStorage.setItem('rememberMe', 'true');
+      } else {
+        localStorage.removeItem('email');
+        localStorage.removeItem('password');
+        localStorage.removeItem('rememberMe');
+      }
     };
-  }, []);
+  }, [email, password, rememberMe]);
 
   const isLoginFormValid = !!email && !!password;
 
@@ -95,6 +115,14 @@ const SignIn: React.FC = () => {
           onFocus={() => handleFocus('password')}
           onBlur={() => handleBlur('password')}
         />
+        <label>
+          <input
+            type="checkbox"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+          />
+          Remember Me
+        </label>
         <button onClick={handleLogin} disabled={!isLoginFormValid}>Login</button>
       </div>
 

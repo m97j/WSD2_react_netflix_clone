@@ -1,3 +1,3 @@
-[submodule "WSD_ASSIGNMENT2"]
-	path = WSD_ASSIGNMENT2
-	url = https://github.com/m97j/WSD_SJ2-neflx_cop.git
+[submodule "WSD_SJ2-neflx_cop"]
+  path = WSD_SJ2-neflx_cop
+  url = https://github.com/m97j/WSD_SJ2-neflx_cop.git

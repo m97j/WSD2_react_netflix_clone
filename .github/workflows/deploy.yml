@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          submodules: true  # 서브모듈 포함하여 체크아웃
 
       - name: Install dependencies
         run: npm install

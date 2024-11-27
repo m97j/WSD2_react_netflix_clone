@@ -4,8 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faUser, faTicket, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import './header.component.css';  // 스타일을 여기에 추가합니다.
 
-//추가 설치 내용
-//npm install react-router-dom @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
 
 
 const HeaderComponent: React.FC = () => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../../util/auth/auth.service';
-import './signIn.css';
+import './signin.css';
 
 const SignIn: React.FC = () => {
   const [isLoginVisible, setIsLoginVisible] = useState(true);

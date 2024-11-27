@@ -32,25 +32,6 @@ const MovieInfiniteScrollComponent: React.FC<MovieInfiniteScrollComponentProps> 
   const wishlistTimerRef = useRef<number | null>(null);
   const observer = useRef<IntersectionObserver | null>(null);
 
-  useEffect(() => {
-    setupIntersectionObserver();
-    fetchMovies();
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('scroll', handleScroll);
-      if (observer.current) {
-        observer.current.disconnect();
-      }
-      if (wishlistTimerRef.current) {
-        clearTimeout(wishlistTimerRef.current);
-      }
-    };
-  }, []);
-
   const setupIntersectionObserver = () => {
     observer.current = new IntersectionObserver(
       (entries) => {
@@ -155,6 +136,25 @@ const MovieInfiniteScrollComponent: React.FC<MovieInfiniteScrollComponentProps> 
     setHasMore(true);
     fetchMovies();
   };
+
+  useEffect(() => {
+    setupIntersectionObserver();
+    fetchMovies();
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+      if (wishlistTimerRef.current) {
+        clearTimeout(wishlistTimerRef.current);
+      }
+    };
+  }, [fetchMovies, handleResize, setupIntersectionObserver]);
 
   return (
     <div className="movie-grid" ref={gridContainerRef}>

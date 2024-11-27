@@ -14,24 +14,12 @@ const MovieRowComponent: React.FC<MovieRowComponentProps> = ({ title, url }) => 
   const [movies, setMovies] = useState<any[]>([]);
   const [scrollAmount, setScrollAmount] = useState(0);
   const [showButtons, setShowButtons] = useState(false);
-  const [isScrolling, setIsScrolling] = useState(false);
+  //const [isScrolling, setIsScrolling] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   const sliderWindowRef = useRef<HTMLDivElement>(null);
   const { toggleWishlist, isInWishlist } = useWishlist();
   let touchStartX = 0;
   let touchEndX = 0;
-
-  useEffect(() => {
-    fetchMovies();
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [url]);
-
-  useEffect(() => {
-    calculateMaxScroll();
-  }, [movies]);
 
   const fetchMovies = async () => {
     try {
@@ -85,6 +73,18 @@ const MovieRowComponent: React.FC<MovieRowComponentProps> = ({ title, url }) => 
       slide(direction, Math.abs(touchDiff));
     }
   };
+
+  useEffect(() => {
+    fetchMovies();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [fetchMovies, handleResize]);
+
+  useEffect(() => {
+    calculateMaxScroll();
+  }, [calculateMaxScroll]);
 
   return (
     <div className="movie-row">

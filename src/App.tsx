@@ -6,7 +6,6 @@ import HomeMain from './app/components/home/main/home-main_component';
 import HomePopular from './app/components/home/popular/home-popular_component';
 import HomeWishlist from './app/components/home/wishlist/home-wishlist_component';
 import HomeSearch from './app/components/search/home-search.component';
-import PrivateRoute from './app/guards/auth.guards'; // PrivateRoute 컴포넌트 임포트
 import './App.css';
 
 const App: React.FC = () => {

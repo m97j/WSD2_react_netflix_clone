@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import { Movie } from '../../../models/types';
 import useWishlist from '../../util/movie/wishlist';
@@ -17,7 +17,7 @@ const MovieGridComponent: React.FC<MovieGridComponentProps> = ({ fetchUrl }) => 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const gridContainerRef = useRef<HTMLDivElement>(null);
 
-  const fetchMovies = async () => {
+  const fetchMovies = useCallback(async () => {
     try {
       const totalMoviesNeeded = 120;
       const numberOfPages = Math.ceil(totalMoviesNeeded / 20);
@@ -34,18 +34,13 @@ const MovieGridComponent: React.FC<MovieGridComponentProps> = ({ fetchUrl }) => 
     } catch (error) {
       console.error('Error fetching movies:', error);
     }
-  };
+  }, [fetchUrl, moviesPerPage, setMovies]);
 
   const getImageUrl = (path: string): string => {
     return `https://image.tmdb.org/t/p/w300${path}`;
-  };
-
-  const handleResize = () => {
-    setIsMobile(window.innerWidth <= 768);
-    calculateLayout();
-  };
-
-  const calculateLayout = () => {
+  }; 
+  
+  const calculateLayout = useCallback(() => {
     if (gridContainerRef.current) {
       const containerWidth = gridContainerRef.current.offsetWidth;
       const containerHeight = window.innerHeight - gridContainerRef.current.offsetTop;
@@ -53,13 +48,18 @@ const MovieGridComponent: React.FC<MovieGridComponentProps> = ({ fetchUrl }) => 
       const movieCardHeight = isMobile ? 150 : 220;
       const horizontalGap = isMobile ? 10 : 15;
       const verticalGap = -10;
-
+  
       const newRowSize = Math.floor(containerWidth / (movieCardWidth + horizontalGap));
       const maxRows = Math.floor(containerHeight / (movieCardHeight + verticalGap));
       setRowSize(newRowSize);
       setMoviesPerPage(newRowSize * maxRows);
     }
-  };
+  }, [gridContainerRef, isMobile, setRowSize, setMoviesPerPage]); // 필요한 의존성 추가
+  
+  const handleResize = useCallback(() => {
+    setIsMobile(window.innerWidth <= 768);
+    calculateLayout();
+  }, [setIsMobile, calculateLayout]);
 
   const visibleMovieGroups = () => {
     const startIndex = (currentPage - 1) * moviesPerPage;

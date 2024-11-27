@@ -21,14 +21,14 @@ const MovieRowComponent: React.FC<MovieRowComponentProps> = ({ title, url }) => 
   let touchStartX = 0;
   let touchEndX = 0;
 
-  const fetchMovies = async () => {
+  const fetchMovies = useCallback(async () => {
     try {
       const response = await axios.get(url);
       setMovies(response.data.results);
     } catch (error) {
       console.error('Error fetching movies:', error);
     }
-  };
+  }, [url]);
 
   const calculateMaxScroll = useCallback((): number => {
     if (sliderRef.current && sliderWindowRef.current) {
@@ -49,10 +49,12 @@ const MovieRowComponent: React.FC<MovieRowComponentProps> = ({ title, url }) => 
     }
   };
 
-  const handleResize = () => {
+
+  const handleResize = useCallback(() => {
     calculateMaxScroll();
     setScrollAmount((prev) => Math.min(prev, calculateMaxScroll()));
-  };
+  }, [calculateMaxScroll, setScrollAmount]); // 필요한 의존성 추가
+  
 
   const handleMouseMove = () => setShowButtons(true);
   const handleMouseLeave = () => setShowButtons(false);

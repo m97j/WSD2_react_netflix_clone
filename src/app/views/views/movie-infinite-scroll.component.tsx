@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { Movie } from '../../../models/types';
 import useWishlist from '../../util/movie/wishlist';
@@ -31,31 +31,16 @@ const MovieInfiniteScrollComponent: React.FC<MovieInfiniteScrollComponentProps> 
   const loadingTriggerRef = useRef<HTMLDivElement>(null);
   const wishlistTimerRef = useRef<number | null>(null);
   const observer = useRef<IntersectionObserver | null>(null);
-
-  const setupIntersectionObserver = () => {
-    observer.current = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !isLoading && hasMore) {
-          fetchMovies();
-        }
-      },
-      { rootMargin: '100px', threshold: 0.1 }
-    );
-
-    if (loadingTriggerRef.current) {
-      observer.current.observe(loadingTriggerRef.current);
-    }
-  };
-
-  const fetchMovies = async () => {
+  
+  const fetchMovies = useCallback(async () => {
     if (isLoading || !hasMore) return;
-
+  
     setIsLoading(true);
     try {
       const url = genreId === '0'
         ? 'https://api.themoviedb.org/3/movie/popular'
         : 'https://api.themoviedb.org/3/discover/movie';
-
+  
       const params = {
         api_key: apiKey,
         language: 'ko-KR',
@@ -63,26 +48,26 @@ const MovieInfiniteScrollComponent: React.FC<MovieInfiniteScrollComponentProps> 
         per_page: 10,
         ...(genreId !== '0' && { with_genres: genreId })
       };
-
+  
       const response: AxiosResponse<{ results: Movie[] }> = await axios.get(url, { params });
       const newMovies = response.data.results;
-
+  
       if (newMovies.length > 0) {
         let movieArray = [...movies, ...newMovies];
-
+  
         if (sortId !== 'all') {
           movieArray = movieArray.filter(movie =>
             movie.original_language === sortId
           );
         }
-
+  
         movieArray = movieArray.filter(movie => {
           if (ageId === -1) return true;
           if (ageId === -2) return movie.vote_average <= 4;
           return movie.vote_average >= ageId &&
             movie.vote_average < ageId + 1;
         });
-
+  
         setMovies(movieArray);
         setCurrentPage(currentPage + 1);
       } else {
@@ -93,7 +78,22 @@ const MovieInfiniteScrollComponent: React.FC<MovieInfiniteScrollComponentProps> 
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [apiKey, genreId, sortId, ageId, currentPage, hasMore, isLoading, movies, setMovies, setCurrentPage, setIsLoading, setHasMore]);
+  
+  const setupIntersectionObserver = useCallback(() => {
+    observer.current = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !isLoading && hasMore) {
+          fetchMovies();
+        }
+      },
+      { rootMargin: '100px', threshold: 0.1 }
+    );
+  
+    if (loadingTriggerRef.current) {
+      observer.current.observe(loadingTriggerRef.current);
+    }
+  }, [isLoading, hasMore, fetchMovies]);
 
   const getImageUrl = (path: string): string => {
     return path ? `https://image.tmdb.org/t/p/w300${path}` : '/placeholder-image.jpg';
@@ -110,7 +110,7 @@ const MovieInfiniteScrollComponent: React.FC<MovieInfiniteScrollComponentProps> 
     }, []);
   };
 
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     setIsMobile(window.innerWidth <= 768);
     if (gridContainerRef.current) {
       const containerWidth = gridContainerRef.current.offsetWidth;
@@ -118,7 +118,7 @@ const MovieInfiniteScrollComponent: React.FC<MovieInfiniteScrollComponentProps> 
       const horizontalGap = isMobile ? 10 : 15;
       setRowSize(Math.floor(containerWidth / (movieCardWidth + horizontalGap)));
     }
-  };
+  }, [setIsMobile, gridContainerRef, isMobile, setRowSize]); // 필요한 의존성 추가
 
   const handleScroll = () => {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;

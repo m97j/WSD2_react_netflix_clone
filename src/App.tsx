@@ -11,7 +11,7 @@ import './App.css';
 const App: React.FC = () => {
   return (
     <div className="app-root">
-      <Router>
+      <Router basename='/WSD_SJ2-neflx_cop'>
         <Routes>
           <Route path="/" element={<Home />}>
             <Route index element={<HomeMain />} />

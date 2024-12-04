@@ -82,17 +82,18 @@ const SignIn: React.FC = () => {
     );
   };
 
-  const handleRegister = () => {
+  const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     AuthService.tryRegister(registerEmail, registerPassword).then(
       () => {
-        toggleCard();
+        navigate('/signin');
       },
       (err) => {
         alert(err.message);
       }
     );
   };
-
+  
   return (
     <div>
       <div className="bg-image"></div>

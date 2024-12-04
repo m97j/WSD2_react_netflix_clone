@@ -2,19 +2,18 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import useWishlist from '../../util/movie/wishlist';
 
-//추가설치
-//npm install axios
+// 추가설치
+// npm install axios
 
 interface MovieRowComponentProps {
   title: string;
-  url: string;
+  fetchUrl: string;
 }
 
-const MovieRowComponent: React.FC<MovieRowComponentProps> = ({ title, url }) => {
+const MovieRowComponent: React.FC<MovieRowComponentProps> = ({ title, fetchUrl }) => {
   const [movies, setMovies] = useState<any[]>([]);
   const [scrollAmount, setScrollAmount] = useState(0);
   const [showButtons, setShowButtons] = useState(false);
-  //const [isScrolling, setIsScrolling] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   const sliderWindowRef = useRef<HTMLDivElement>(null);
   const { toggleWishlist, isInWishlist } = useWishlist();
@@ -23,12 +22,12 @@ const MovieRowComponent: React.FC<MovieRowComponentProps> = ({ title, url }) => 
 
   const fetchMovies = useCallback(async () => {
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(fetchUrl);
       setMovies(response.data.results);
     } catch (error) {
       console.error('Error fetching movies:', error);
     }
-  }, [url]);
+  }, [fetchUrl]);
 
   const calculateMaxScroll = useCallback((): number => {
     if (sliderRef.current && sliderWindowRef.current) {
@@ -36,7 +35,6 @@ const MovieRowComponent: React.FC<MovieRowComponentProps> = ({ title, url }) => 
     }
     return 0; // 항상 number를 반환하도록 보장
   }, []);
-  
 
   const slide = (direction: 'left' | 'right', amount: number | null = null) => {
     if (sliderWindowRef.current) {
@@ -49,12 +47,10 @@ const MovieRowComponent: React.FC<MovieRowComponentProps> = ({ title, url }) => 
     }
   };
 
-
   const handleResize = useCallback(() => {
     calculateMaxScroll();
     setScrollAmount((prev) => Math.min(prev, calculateMaxScroll()));
   }, [calculateMaxScroll, setScrollAmount]); // 필요한 의존성 추가
-  
 
   const handleMouseMove = () => setShowButtons(true);
   const handleMouseLeave = () => setShowButtons(false);
@@ -92,35 +88,40 @@ const MovieRowComponent: React.FC<MovieRowComponentProps> = ({ title, url }) => 
     <div className="movie-row">
       <h2>{title}</h2>
       <div
-        className="movie-row-slider-window"
-        ref={sliderWindowRef}
+        className="slider-container"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div
-          className="movie-row-slider"
-          ref={sliderRef}
-          style={{ transform: `translateX(-${scrollAmount}px)` }}
+        <button
+          className="slider-button left"
+          onClick={() => slide('left')}
+          style={{ opacity: showButtons && scrollAmount > 0 ? 1 : 0 }}
+          disabled={scrollAmount === 0}
         >
-          {movies.map((movie) => (
-            <div key={movie.id} className="movie-row-item">
-              <img src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} alt={movie.title} />
-              <button onClick={() => toggleWishlist(movie)}>
-                {isInWishlist(movie.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
-              </button>
-            </div>
-          ))}
+          &lt;
+        </button>
+        <div className="slider-window" ref={sliderWindowRef}>
+          <div className="movie-slider" ref={sliderRef} style={{ transform: `translateX(-${scrollAmount}px)` }}>
+            {movies.map((movie) => (
+              <div key={movie.id} className="movie-card" onClick={() => toggleWishlist(movie)}>
+                <img src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} alt={movie.title} />
+                {isInWishlist(movie.id) && <div className="wishlist-indicator">👍</div>}
+              </div>
+            ))}
+          </div>
         </div>
+        <button
+          className="slider-button right"
+          onClick={() => slide('right')}
+          style={{ opacity: showButtons && scrollAmount < calculateMaxScroll() ? 1 : 0 }}
+          disabled={scrollAmount >= calculateMaxScroll()}
+        >
+          &gt;
+        </button>
       </div>
-      {showButtons && (
-        <>
-          <button onClick={() => slide('left')}>Left</button>
-          <button onClick={() => slide('right')}>Right</button>
-        </>
-      )}
     </div>
   );
 };

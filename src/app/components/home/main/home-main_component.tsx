@@ -34,15 +34,11 @@ const HomeMainComponent: React.FC = () => {
   }, [apiKey]);
 
   return (
-    <div>
-      <header className={`app-header ${isScrolled ? 'scrolled' : ''}`}>
-        <FontAwesomeIcon icon={faSearch} />
-        <FontAwesomeIcon icon={faUser} />
-      </header>
+    <div className="home">
       <BannerComponent movie={featuredMovie} />
-      <MovieRowComponent url={popularMoviesUrl} title="Popular Movies" />
-      <MovieRowComponent url={newReleasesUrl} title="New Releases" />
-      <MovieRowComponent url={actionMoviesUrl} title="Action Movies" />
+      <MovieRowComponent title="인기 영화" fetchUrl={popularMoviesUrl} />
+      <MovieRowComponent title="최신 영화" fetchUrl={newReleasesUrl} />
+      <MovieRowComponent title="액션 영화" fetchUrl={actionMoviesUrl} />
     </div>
   );
 };

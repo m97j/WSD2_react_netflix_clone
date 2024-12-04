@@ -2,6 +2,8 @@ import React from 'react';
 
 interface BannerComponentProps {
   movie: {
+    title: string;
+    overview: string;
     backdrop_path: string;
   } | null;
 }
@@ -18,7 +20,14 @@ const BannerComponent: React.FC<BannerComponentProps> = ({ movie }) => {
         backgroundPosition: 'center center',
       }}
     >
-      {/* 추가적으로 영화 정보 표시 */}
+      {movie && (
+        <div className="banner-content">
+          <h1>{movie.title}</h1>
+          <p>{movie.overview}</p>
+          <button className="play-btn title-btn">재생</button>
+          <button className="info-btn title-btn">상세 정보</button>
+        </div>
+      )}
     </div>
   );
 };

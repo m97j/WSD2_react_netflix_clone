@@ -43,9 +43,19 @@ const HomeSearchComponent: React.FC = () => {
   };
 
   return (
-    <div className="home-search">
-      <MovieSearchComponent changeOptions={changeOptions} />
-      <MovieInfiniteScrollComponent apiKey={apiKey} genreId={genreId} ageId={ageId} sortId={sortId} fetchUrl=''/>
+    <div className="container-search">
+      <div className="container-search-bar">
+        <MovieSearchComponent changeOptions={changeOptions} />
+      </div>
+      <div className="content-search">
+        <MovieInfiniteScrollComponent 
+          apiKey={apiKey} 
+          genreId={genreId} 
+          ageId={ageId} 
+          sortId={sortId} 
+          fetchUrl='' 
+        />
+      </div>
     </div>
   );
 };

@@ -16,7 +16,6 @@ const SignIn: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // onMounted 로직: 로컬 스토리지에서 ID와 비밀번호 가져오기
     const savedEmail = localStorage.getItem('email');
     const savedPassword = localStorage.getItem('password');
     const savedRememberMe = localStorage.getItem('rememberMe') === 'true';
@@ -29,7 +28,6 @@ const SignIn: React.FC = () => {
     setRememberMe(savedRememberMe);
 
     return () => {
-      // onUnmounted 로직: 로컬 스토리지에 ID와 비밀번호 저장
       if (rememberMe) {
         localStorage.setItem('email', email);
         localStorage.setItem('password', password);
@@ -97,73 +95,110 @@ const SignIn: React.FC = () => {
 
   return (
     <div>
-      <div className="auth-card" id="login" style={{ display: isLoginVisible ? 'block' : 'none' }}>
-        <h2>Sign In</h2>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onFocus={() => handleFocus('email')}
-          onBlur={() => handleBlur('email')}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onFocus={() => handleFocus('password')}
-          onBlur={() => handleBlur('password')}
-        />
-        <label>
-          <input
-            type="checkbox"
-            checked={rememberMe}
-            onChange={(e) => setRememberMe(e.target.checked)}
-          />
-          Remember Me
-        </label>
-        <button onClick={handleLogin} disabled={!isLoginFormValid}>Login</button>
-      </div>
+      <div className="bg-image"></div>
+      <div className="container">
+        <div id="phone">
+          <div id="content-wrapper">
+            <div className={`card ${!isLoginVisible ? 'hidden' : ''}`} id="login">
+              <form onSubmit={handleLogin}>
+                <h1>Sign in</h1>
+                <div className={`input ${email ? 'active' : ''}`}>
+                  <input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onFocus={() => handleFocus('email')}
+                    onBlur={() => handleBlur('email')}
+                  />
+                  <label htmlFor="email">Username or Email</label>
+                </div>
+                <div className={`input ${password ? 'active' : ''}`}>
+                  <input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onFocus={() => handleFocus('password')}
+                    onBlur={() => handleBlur('password')}
+                  />
+                  <label htmlFor="password">Password</label>
+                </div>
+                <span className="checkbox remember">
+                  <input
+                    type="checkbox"
+                    id="remember"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                  />
+                  <label htmlFor="remember" className="read-text">Remember me</label>
+                </span>
+                <span className="checkbox forgot">
+                  <a href="#">Forgot Password?</a>
+                </span>
+                <button type="submit" disabled={!isLoginFormValid}>Login</button>
+              </form>
+              <a href="javascript:void(0)" className="account-check" onClick={toggleCard}>
+                Already have an account? <b>Sign in</b>
+              </a>
+            </div>
 
-      <div className="auth-card" id="register" style={{ display: !isLoginVisible ? 'block' : 'none' }}>
-        <h2>Register</h2>
-        <input
-          type="email"
-          placeholder="Email"
-          value={registerEmail}
-          onChange={(e) => setRegisterEmail(e.target.value)}
-          onFocus={() => handleFocus('registerEmail')}
-          onBlur={() => handleBlur('registerEmail')}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={registerPassword}
-          onChange={(e) => setRegisterPassword(e.target.value)}
-          onFocus={() => handleFocus('registerPassword')}
-          onBlur={() => handleBlur('registerPassword')}
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          onFocus={() => handleFocus('confirmPassword')}
-          onBlur={() => handleBlur('confirmPassword')}
-        />
-        <label>
-          <input
-            type="checkbox"
-            checked={acceptTerms}
-            onChange={(e) => setAcceptTerms(e.target.checked)}
-          />
-          Accept Terms and Conditions
-        </label>
-        <button onClick={handleRegister} disabled={!isRegisterFormValid}>Register</button>
+            <div className={`card ${isLoginVisible ? 'hidden' : ''}`} id="register">
+              <form onSubmit={handleRegister}>
+                <h1>Sign up</h1>
+                <div className={`input ${registerEmail ? 'active' : ''}`}>
+                  <input
+                    id="register-email"
+                    type="email"
+                    value={registerEmail}
+                    onChange={(e) => setRegisterEmail(e.target.value)}
+                    onFocus={() => handleFocus('registerEmail')}
+                    onBlur={() => handleBlur('registerEmail')}
+                  />
+                  <label htmlFor="register-email">Email</label>
+                </div>
+                <div className={`input ${registerPassword ? 'active' : ''}`}>
+                  <input
+                    id="register-password"
+                    type="password"
+                    value={registerPassword}
+                    onChange={(e) => setRegisterPassword(e.target.value)}
+                    onFocus={() => handleFocus('registerPassword')}
+                    onBlur={() => handleBlur('registerPassword')}
+                  />
+                  <label htmlFor="register-password">Password</label>
+                </div>
+                <div className={`input ${confirmPassword ? 'active' : ''}`}>
+                  <input
+                    id="confirm-password"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    onFocus={() => handleFocus('confirmPassword')}
+                    onBlur={() => handleBlur('confirmPassword')}
+                  />
+                  <label htmlFor="confirm-password">Confirm Password</label>
+                </div>
+                <span className="checkbox remember">
+                  <input
+                    type="checkbox"
+                    id="terms"
+                    checked={acceptTerms}
+                    onChange={(e) => setAcceptTerms(e.target.checked)}
+                  />
+                  <label htmlFor="terms" className="read-text">
+                    I have read <b>Terms and Conditions</b>
+                  </label>
+                </span>
+                <button type="submit" disabled={!isRegisterFormValid}>Register</button>
+              </form>
+              <a href="javascript:void(0)" id="gotologin" className="account-check" onClick={toggleCard}>
+                Don't have an account? <b>Sign up</b>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <button onClick={toggleCard}>Toggle</button>
     </div>
   );
 };

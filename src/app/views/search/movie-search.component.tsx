@@ -49,14 +49,15 @@ const MovieSearchComponent: React.FC<MovieSearchComponentProps> = ({ changeOptio
   };
 
   return (
-    <div className="movie-search">
+    <div className="dropdown-container">
+      <label>선호하는 설정을 선택하세요</label>
       {dropdownEntries.map(({ key, options }) => (
-        <div key={key} className="dropdown">
-          <button onClick={() => toggleDropdown(key)}>
+        <div key={key} className="custom-select">
+          <div className="select-selected" onClick={() => toggleDropdown(key)}>
             {selectedOptions[key]}
-          </button>
+          </div>
           {activeDropdown === key && (
-            <div className="dropdown-menu">
+            <div className="select-items">
               {options.map(option => (
                 <div key={option} onClick={() => selectOption(key, option)}>
                   {option}
@@ -66,7 +67,7 @@ const MovieSearchComponent: React.FC<MovieSearchComponentProps> = ({ changeOptio
           )}
         </div>
       ))}
-      <button onClick={clearOptions}>Clear</button>
+      <button className="clear-options" onClick={clearOptions}>초기화</button>
     </div>
   );
 };

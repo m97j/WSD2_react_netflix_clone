@@ -39,23 +39,22 @@ const HomePopularComponent: React.FC = () => {
   };
 
   return (
-    <div className="home-popular">
-      <div className="view-toggle">
-        <FontAwesomeIcon icon={faTh} onClick={() => setView('grid')} />
-        <FontAwesomeIcon icon={faBars} onClick={() => setView('list')} />
-      </div>
+    <div className="home">
       {currentView === 'grid' ? (
         <MovieGridComponent fetchUrl={fetchURL()} />
       ) : (
         <MovieInfiniteScrollComponent
-          genreId="0" // 예시 값
+          genreId="28"
           apiKey={apiKey}
-          ageId={-1} // 예시 값
-          sortId="all" // 예시 값
+          ageId={-1}
+          sortId="all"
           fetchUrl={fetchURL()}
         />
-
       )}
+      <div className="view-toggle">
+        <FontAwesomeIcon icon={faTh} onClick={() => setView('grid')} />
+        <FontAwesomeIcon icon={faBars} onClick={() => setView('list')} />
+      </div>
     </div>
   );
 };

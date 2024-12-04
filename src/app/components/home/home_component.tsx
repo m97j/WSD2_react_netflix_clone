@@ -1,14 +1,16 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 import HeaderComponent from '../../layout/header/header.component'; // Adjust the import path as needed
 
 const HomeComponent = () => {
   return (
-    <div>
+    <div id="app">
       <HeaderComponent />
-      {/* Your template content goes here */}
+      <div id="container">
+        <Outlet />
+      </div>
     </div>
   );
 };
 
 export default HomeComponent;
-

@@ -34,12 +34,12 @@ const MovieGridComponent: React.FC<MovieGridComponentProps> = ({ fetchUrl }) => 
     } catch (error) {
       console.error('Error fetching movies:', error);
     }
-  }, [fetchUrl, moviesPerPage, setMovies]);
+  }, [fetchUrl, moviesPerPage]);
 
   const getImageUrl = (path: string): string => {
     return `https://image.tmdb.org/t/p/w300${path}`;
   }; 
-  
+
   const calculateLayout = useCallback(() => {
     if (gridContainerRef.current) {
       const containerWidth = gridContainerRef.current.offsetWidth;
@@ -48,18 +48,18 @@ const MovieGridComponent: React.FC<MovieGridComponentProps> = ({ fetchUrl }) => 
       const movieCardHeight = isMobile ? 150 : 220;
       const horizontalGap = isMobile ? 10 : 15;
       const verticalGap = -10;
-  
+
       const newRowSize = Math.floor(containerWidth / (movieCardWidth + horizontalGap));
       const maxRows = Math.floor(containerHeight / (movieCardHeight + verticalGap));
       setRowSize(newRowSize);
       setMoviesPerPage(newRowSize * maxRows);
     }
-  }, [gridContainerRef, isMobile, setRowSize, setMoviesPerPage]); // 필요한 의존성 추가
-  
+  }, [isMobile]);
+
   const handleResize = useCallback(() => {
     setIsMobile(window.innerWidth <= 768);
     calculateLayout();
-  }, [setIsMobile, calculateLayout]);
+  }, [calculateLayout]);
 
   const visibleMovieGroups = () => {
     const startIndex = (currentPage - 1) * moviesPerPage;
@@ -102,9 +102,9 @@ const MovieGridComponent: React.FC<MovieGridComponentProps> = ({ fetchUrl }) => 
 
   return (
     <div className="movie-grid" ref={gridContainerRef}>
-      <div className={`grid-container ${currentPage > 1 ? 'scrolled' : ''}`}>
+      <div className={['grid-container', currentPage > 1 ? 'scrolled' : ''].join(' ')}>
         {visibleMovieGroups().map((movieGroup, rowIndex) => (
-          <div key={rowIndex} className={`movie-row ${movieGroup.length === rowSize ? 'full' : ''}`}>
+          <div key={rowIndex} className={['movie-row', movieGroup.length === rowSize ? 'full' : ''].join(' ')}>
             {movieGroup.map(movie => (
               <div key={movie.id} className="movie-card" onMouseUp={() => toggleWishlist(movie)}>
                 <img src={getImageUrl(movie.poster_path)} alt={movie.title} />

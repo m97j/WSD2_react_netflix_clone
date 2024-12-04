@@ -170,7 +170,7 @@ const MovieInfiniteScrollComponent: React.FC<MovieInfiniteScrollComponentProps> 
                   toggleWishlist(movie);
                 }, 800);
               }}>
-                <img src={getImageUrl(movie.poster_path)} alt={movie.title} loading="lazy" />
+                <img src={getImageUrl(movie.poster_path)} alt={movie.title} />
                 <div className="movie-title">{movie.title}</div>
                 {isInWishlist(movie.id) && <div className="wishlist-indicator">👍</div>}
               </div>
@@ -178,20 +178,13 @@ const MovieInfiniteScrollComponent: React.FC<MovieInfiniteScrollComponentProps> 
           </div>
         ))}
       </div>
-
       <div ref={loadingTriggerRef} className="loading-trigger">
         {isLoading && (
-          <div className="loading-indicator">
-            <div className="spinner"></div>
-            <span>Loading...</span>
-          </div>
+          <div className="loading-indicator">Loading...</div>
         )}
       </div>
-
       {showTopButton && (
-        <button onClick={scrollToTopAndReset} className="top-button" aria-label="맨 위로 이동">
-          Top
-        </button>
+        <button onClick={scrollToTopAndReset} className="top-button">Top</button>
       )}
     </div>
   );

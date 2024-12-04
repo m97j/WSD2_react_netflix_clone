@@ -40,9 +40,9 @@ const HomeMainComponent: React.FC = () => {
         <FontAwesomeIcon icon={faUser} />
       </header>
       <BannerComponent movie={featuredMovie} />
-      <MovieRowComponent url={popularMoviesUrl} title="Popular Movies" />
-      <MovieRowComponent url={newReleasesUrl} title="New Releases" />
-      <MovieRowComponent url={actionMoviesUrl} title="Action Movies" />
+      <MovieRowComponent fetchUrl={popularMoviesUrl} title="Popular Movies" />
+      <MovieRowComponent fetchUrl={newReleasesUrl} title="New Releases" />
+      <MovieRowComponent fetchUrl={actionMoviesUrl} title="Action Movies" />
     </div>
   );
 };

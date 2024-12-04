@@ -17,4 +17,3 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...re
 };
 
 export default PrivateRoute;
-321

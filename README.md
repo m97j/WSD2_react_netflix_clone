@@ -1,6 +1,6 @@
 ---
 
-## ✅ 프로젝트 요약
+ ✅ 프로젝트 요약
 
 * **레포지토리:** [https://github.com/m97j/wsd_sj2-neflx_cop](https://github.com/m97j/wsd_sj2-neflx_cop)
 * **목적:** 개인 프로젝트 기반의 **넷플릭스 클론 사이트** 개발

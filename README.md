@@ -2,7 +2,7 @@
 
 ### ✅ 프로젝트 요약
 
-* **레포지토리:** [https://github.com/m97j/wsd\_sj2-neflx\_cop](https://github.com/m97j/wsd_sj2-neflx_cop)
+* **레포지토리:** [https://github.com/m97j/wsd_sj2-neflx_cop](https://github.com/m97j/wsd_sj2-neflx_cop)
 * **목적:** 개인 프로젝트 기반의 **넷플릭스 클론 사이트** 개발
 * **기술 스택:** React, Node.js, TMDB API, Firebase
 

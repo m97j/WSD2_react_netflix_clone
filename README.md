@@ -53,7 +53,7 @@ React와 Node.js 기반으로 영화 정보 API와 사용자 인증, 즐겨찾�
 
 ## 📂 폴더 구조
 
-
+```
 wsd\_sj2-neflx\_cop/
 ├── public/
 ├── src/
@@ -66,7 +66,7 @@ wsd\_sj2-neflx\_cop/
 ├── .firebaserc
 ├── firebase.js        # Firebase 설정
 └── package.json
-
+```
 
 
 ## 📷 미리보기

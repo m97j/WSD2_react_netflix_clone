@@ -28,7 +28,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://m97j.github.io/WSD_SJ2-neflx_cop/",
+  "homepage": "https://m97j.github.io/WSD2_react_netflix_clone/",
   "eslintConfig": {
     "extends": [
       "react-app",

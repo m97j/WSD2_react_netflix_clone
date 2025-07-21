@@ -12,7 +12,7 @@ import './App.css';
 const App: React.FC = () => {
   return (
     <div className="app-root">
-      <Router basename='/WSD_SJ2-neflx_cop'>
+      <Router basename='/WSD2_react_netflix_clone'>
         <Routes>
           <Route path="/signin" element={<SignIn />} />
           <Route path="/" element={<PrivateRoute component={Home} />}>
